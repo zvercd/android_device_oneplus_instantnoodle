@@ -110,6 +110,8 @@ public class CameraDeviceImpl extends CameraDevice
     private final CameraCharacteristics mCharacteristics;
     private final int mTotalPartialCount;
 
+    private final boolean mForceMultiResolution;
+
     private static final long NANO_PER_SECOND = 1000000000; //ns
 
     /**
@@ -274,6 +276,13 @@ public class CameraDeviceImpl extends CameraDevice
         } else {
             mTotalPartialCount = partialCount;
         }
+<<<<<<< HEAD:overlay/frameworks/base/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
+=======
+        mIsPrivilegedApp = checkPrivilegedAppList();
+
+        mForceMultiResolution = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_forceMultiResolution);
+>>>>>>> 517ba49493a5 (Add config overlay to force enable multi resolution for camera):core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
     }
 
     public CameraDeviceCallbacks getCallbacks() {
@@ -1337,9 +1346,28 @@ public class CameraDeviceImpl extends CameraDevice
     }
 
     private void checkInputConfiguration(InputConfiguration inputConfig) {
+<<<<<<< HEAD:overlay/frameworks/base/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
         if (inputConfig != null) {
             StreamConfigurationMap configMap = mCharacteristics.get(
                     CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+=======
+        if (inputConfig == null) {
+            return;
+        }
+        int inputFormat = inputConfig.getFormat();
+        if (inputConfig.isMultiResolution() || mForceMultiResolution) {
+            MultiResolutionStreamConfigurationMap configMap = mCharacteristics.get(
+                    CameraCharacteristics.SCALER_MULTI_RESOLUTION_STREAM_CONFIGURATION_MAP);
+
+            /*
+             * don't check input format and size,
+             * if the package name is in the white list
+             */
+            if (isPrivilegedApp()) {
+                Log.w(TAG, "ignore input format/size check for white listed app");
+                return;
+            }
+>>>>>>> 517ba49493a5 (Add config overlay to force enable multi resolution for camera):core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
 
             int[] inputFormats = configMap.getInputFormats();
             boolean validFormat = false;
