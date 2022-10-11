@@ -276,13 +276,12 @@ public class CameraDeviceImpl extends CameraDevice
         } else {
             mTotalPartialCount = partialCount;
         }
-<<<<<<< HEAD:overlay/frameworks/base/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
-=======
+
         mIsPrivilegedApp = checkPrivilegedAppList();
 
         mForceMultiResolution = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_forceMultiResolution);
->>>>>>> 517ba49493a5 (Add config overlay to force enable multi resolution for camera):core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
+
     }
 
     public CameraDeviceCallbacks getCallbacks() {
@@ -1346,11 +1345,11 @@ public class CameraDeviceImpl extends CameraDevice
     }
 
     private void checkInputConfiguration(InputConfiguration inputConfig) {
-<<<<<<< HEAD:overlay/frameworks/base/core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
+
         if (inputConfig != null) {
             StreamConfigurationMap configMap = mCharacteristics.get(
                     CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-=======
+
         if (inputConfig == null) {
             return;
         }
@@ -1367,7 +1366,7 @@ public class CameraDeviceImpl extends CameraDevice
                 Log.w(TAG, "ignore input format/size check for white listed app");
                 return;
             }
->>>>>>> 517ba49493a5 (Add config overlay to force enable multi resolution for camera):core/java/android/hardware/camera2/impl/CameraDeviceImpl.java
+
 
             int[] inputFormats = configMap.getInputFormats();
             boolean validFormat = false;
